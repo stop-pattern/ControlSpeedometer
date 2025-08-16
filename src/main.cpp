@@ -43,5 +43,5 @@ void loop() {
     barGraph.loop();
     wifiManager.loop();
 
-    delay(100);
+    delay(50);
 }
