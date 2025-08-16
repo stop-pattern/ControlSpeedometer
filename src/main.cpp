@@ -2,13 +2,14 @@
 
 #include "BarGraph.h"
 #include "Settings.h"
+#include "WebServerManager.h"
 #include "WiFiManager.h"
 
-namespace {
-BarGraph barGraph;       ///< バーグラフ制御インスタンス
-WiFiManager wifiManager; ///< WiFi管理インスタンス
+BarGraph barGraph; ///< バーグラフ制御インスタンス
 
-int speed = 0;
+namespace {
+WiFiManager wifiManager;           ///< WiFi管理インスタンス
+WebServerManager webServerManager; ///< Webサーバー管理インスタンス
 } // namespace
 
 /**
@@ -24,11 +25,15 @@ void setup() {
 
     barGraph.begin();
     wifiManager.begin();
+    webServerManager.begin();
 
     log_d("setup end");
     if (settings::debug) {
         log_d("Debug mode is enabled");
         barGraph.changeMode(BarGraphMode::MODE_DEMO);
+    } else {
+        log_d("Debug mode is disabled");
+        barGraph.changeMode(BarGraphMode::MODE_WEB);
     }
 }
 
@@ -42,6 +47,7 @@ void loop() {
 
     barGraph.loop();
     wifiManager.loop();
+    // webServerManager.handleClient();
 
     delay(50);
 }

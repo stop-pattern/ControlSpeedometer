@@ -2,7 +2,7 @@
 
 namespace settings {
 // ----- デバッグ設定 -----
-constexpr bool debug = true; ///< デバッグモード（未使用）
+constexpr bool debug = false; ///< デバッグモード（未使用）
 // ----- WiFi設定 -----
 constexpr char ssid[] = "HollyElectric";    ///< アクセスポイントのSSID
 constexpr char password[] = "password";     ///< アクセスポイントのパスワード

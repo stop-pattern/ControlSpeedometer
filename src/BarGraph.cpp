@@ -87,6 +87,10 @@ void BarGraph::loop() {
 
         break;
     }
+    
+    // カスタムモードの処理
+    case BarGraphMode::MODE_WEB:
+        break;
 
     default:
 
@@ -144,11 +148,8 @@ void BarGraph::speedWrite(int16_t speed) {
  */
 void BarGraph::update(int value) {
     // valueを速度に変換して出力
-    int speed = value;
+    speed = value;
     speedWrite(speed);
-    // LED出力例（必要に応じて拡張）
-    digitalWrite(settings::pin_ledR, speed > 90 ? HIGH : LOW);
-    digitalWrite(settings::pin_ledG, speed <= 90 ? HIGH : LOW);
 }
 
 /**
@@ -203,4 +204,13 @@ int BarGraph::getDemoSpeed() {
 
     log_i("demo speed: %d (cycle: %lu/%d)", newSpeed, cycleTime, span);
     return newSpeed;
+}
+
+/**
+ * @brief バーグラフの速度を取得
+ *
+ * @return 現在の速度
+ */
+int BarGraph::getSpeed() {
+    return this->speed;
 }

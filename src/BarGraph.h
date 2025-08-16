@@ -10,6 +10,8 @@ enum class BarGraphMode {
     MODE_0,      ///< 0km/h固定
     MODE_SERIAL, ///< シリアル制御モード
     MODE_DEMO,   ///< デモモード
+    MODE_WEB,    ///< Webモード
+    MODE_TEST,   ///< テストモード
     MODE_CUSTOM, ///< カスタムモード
     MODE_MAX
 };
@@ -54,6 +56,13 @@ class BarGraph {
      * @param mode 更新するモード
      */
     void changeMode(BarGraphMode mode);
+
+    /**
+     * @brief バーグラフの速度を取得
+     *
+     * @return 現在の速度
+     */
+    int getSpeed();
 
   private:
     /**
