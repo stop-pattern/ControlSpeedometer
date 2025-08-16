@@ -164,7 +164,7 @@ void BarGraph::changeMode(BarGraphMode mode) {
  *
  * @return デモモードの速度
  */
-int getDemoSpeed() {
+int BarGraph::getDemoSpeed() {
     // 0→180または180→0にかかる時間を計算
     // ステップ数 = maxSpeed / speedStep、各ステップでupdateInterval待機
     constexpr int waitTime = 6000; // 待機時間（ms）
