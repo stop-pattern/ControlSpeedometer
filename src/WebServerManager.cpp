@@ -7,8 +7,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 // #include <FS.h>
-#include <SPIFFS.h>
 #include <ArduinoJson.h>
+#include <SPIFFS.h>
 
 extern BarGraph barGraph; ///< バーグラフ制御インスタンス
 
@@ -65,9 +65,11 @@ void WebServerManager::notifyAllClients() {
  * @param type メッセージタイプ
  * @param fin フレーム終了フラグ
  */
-void WebServerManager::onWebSocketMessage(AsyncWebSocket *server, AsyncWebSocketClient *client,
-                        AwsFrameInfo *info, char *data, size_t len,
-                        AwsFrameType type, bool fin) {
+void WebServerManager::onWebSocketMessage(AsyncWebSocket *server,
+                                          AsyncWebSocketClient *client,
+                                          AwsFrameInfo *info, char *data,
+                                          size_t len, AwsFrameType type,
+                                          bool fin) {
     if (type == WS_TEXT) {
         JsonDocument doc;
         deserializeJson(doc, data);

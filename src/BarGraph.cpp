@@ -87,7 +87,7 @@ void BarGraph::loop() {
 
         break;
     }
-    
+
     // カスタムモードの処理
     case BarGraphMode::MODE_WEB:
         break;
@@ -211,6 +211,4 @@ int BarGraph::getDemoSpeed() {
  *
  * @return 現在の速度
  */
-int BarGraph::getSpeed() {
-    return this->speed;
-}
+int BarGraph::getSpeed() { return this->speed; }

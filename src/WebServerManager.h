@@ -54,7 +54,7 @@ class WebServerManager {
      * @param state 設定する状態（true: ON, false: OFF）
      */
     void setPinRed(bool state);
-    
+
   private:
     /**
      * @brief 全クライアントへの状態通知
