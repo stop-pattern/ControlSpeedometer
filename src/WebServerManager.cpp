@@ -75,11 +75,9 @@ void WebServerManager::onWebSocketMessage(AsyncWebSocket *server, AsyncWebSocket
         String typeStr = doc["type"];
 
         if (typeStr == "toggle" && id == "green") {
-            pinGreen = !pinGreen;
-            digitalWrite(settings::pin_ledG, pinGreen ? HIGH : LOW);
+            setPinGreen(!pinGreen);
         } else if (typeStr == "toggle" && id == "red") {
-            pinRed = !pinRed;
-            digitalWrite(settings::pin_ledR, pinRed ? HIGH : LOW);
+            setPinRed(!pinRed);
         } else if (typeStr == "speed") {
             int speed = doc["value"];
             if (speed < 0) {
@@ -144,6 +142,43 @@ void WebServerManager::begin() {
  */
 void WebServerManager::handleClient() {
     // 必要に応じてクライアント処理
+}
+
+/**
+ * @brief 緑LEDピンの状態設定
+ *
+ * @param state 設定する状態（true: ON, false: OFF）
+ */
+void WebServerManager::setPinGreen(bool state) {
+    pinGreen = state;
+    digitalWrite(settings::pin_ledG, state ? HIGH : LOW);
+    changeMode();
+}
+
+/**
+ * @brief 赤LEDピンの状態設定
+ *
+ * @param state 設定する状態（true: ON, false: OFF）
+ */
+void WebServerManager::setPinRed(bool state) {
+    pinRed = state;
+    digitalWrite(settings::pin_ledR, state ? HIGH : LOW);
+    changeMode();
+}
+
+/**
+ * @brief バーグラフモードの変更
+ */
+void WebServerManager::changeMode() {
+    if (pinGreen && pinRed) {
+        barGraph.changeMode(BarGraphMode::MODE_WEB);
+    } else if (pinGreen) {
+        barGraph.changeMode(BarGraphMode::MODE_MAX);
+    } else if (pinRed) {
+        barGraph.changeMode(BarGraphMode::MODE_0);
+    } else {
+        barGraph.changeMode(BarGraphMode::MODE_DEMO);
+    }
 }
 
 namespace {

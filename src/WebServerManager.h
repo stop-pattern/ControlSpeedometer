@@ -41,15 +41,20 @@ class WebServerManager {
      */
     void handleClient();
 
-    // /**
-    //  * @brief 404 Not Found ハンドラー
-    //  *
-    //  * 存在しないリソースへのアクセス時に呼び出される
-    //  *
-    //  * @param request HTTPリクエストオブジェクト
-    //  */
-    // static void notFound(AsyncWebServerRequest *request);
+    /**
+     * @brief 緑LEDピンの状態設定
+     *
+     * @param state 設定する状態（true: ON, false: OFF）
+     */
+    void setPinGreen(bool state);
 
+    /**
+     * @brief 赤LEDピンの状態設定
+     *
+     * @param state 設定する状態（true: ON, false: OFF）
+     */
+    void setPinRed(bool state);
+    
   private:
     /**
      * @brief 全クライアントへの状態通知
@@ -86,6 +91,13 @@ class WebServerManager {
                             AsyncWebSocketClient *client, AwsFrameInfo *info,
                             char *data, size_t len, AwsFrameType type,
                             bool fin);
+
+    /**
+     * @brief バーグラフモードの変更
+     *
+     * 現在のモードに応じてバーグラフの表示を切り替える
+     */
+    void changeMode();
 
     // サーバーインスタンスをメンバ変数として管理
     AsyncWebServer *server; ///< HTTPサーバーインスタンス
