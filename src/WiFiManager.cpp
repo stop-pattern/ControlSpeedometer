@@ -5,6 +5,10 @@
 #include <ESPmDNS.h>
 #include <WiFi.h>
 
+namespace {
+void onWiFiDisconnect(WiFiEvent_t event, WiFiEventInfo_t info);
+} // namespace
+
 /**
  * @brief WiFiManagerクラスのコンストラクタ
  */
@@ -23,6 +27,7 @@ void WiFiManager::begin() {
     WiFi.mode(WIFI_MODE_APSTA);
     WiFi.softAP(settings::ssid);
     delay(100);
+    WiFi.onEvent(::onWiFiDisconnect, ARDUINO_EVENT_WIFI_STA_DISCONNECTED);
     WiFi.softAPConfig(settings::ip, settings::ip, settings::subnet);
     WiFi.begin();
 
@@ -74,6 +79,23 @@ void WiFiManager::loop() {
     // WiFi接続状態の確認
     if (!isConnected()) {
         log_w("WiFi disconnected, attempting to reconnect");
+        WiFi.disconnect();
         WiFi.reconnect();
     }
 }
+
+namespace {
+/**
+ * @brief WiFi切断イベントハンドラ
+ *
+ * WiFi接続が切断された際に呼び出される
+ *
+ * @param event WiFiイベント
+ * @param info イベント情報
+ */
+void onWiFiDisconnect(WiFiEvent_t event, WiFiEventInfo_t info) {
+    log_e("WiFi disconnected, reason: %d", info.wifi_sta_disconnected.reason);
+    WiFi.begin();
+    WiFi.reconnect();
+}
+} // namespace
